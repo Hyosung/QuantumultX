@@ -65,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608539506477</updated>
-      <workItem from="1608539507873" duration="6654000" />
+      <workItem from="1608539507873" duration="7028000" />
     </task>
     <task id="LOCAL-00001" summary="修改四川电信脚本">
       <created>1608598631684</created>
@@ -81,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608599737687</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="修改四川电信脚本">
+      <created>1608600407924</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1608600407924</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,9 +122,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="修改四川电信脚本" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="320" y="182" key="Vcs.Push.Dialog.v2" timestamp="1608599746612">
-      <screen x="0" y="23" width="1440" height="838" />
+    <state x="320" y="171" key="Vcs.Push.Dialog.v2" timestamp="1608600428672">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="320" y="171" key="Vcs.Push.Dialog.v2/0.0.1440.900/1440.-88.1920.1080@0.0.1440.900" timestamp="1608600428672" />
     <state x="320" y="182" key="Vcs.Push.Dialog.v2/0.23.1440.838/1440.-65.1920.1057@0.23.1440.838" timestamp="1608599746612" />
   </component>
 </project>

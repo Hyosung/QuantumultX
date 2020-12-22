@@ -67,7 +67,7 @@ function toNewSignIn() {
             try {
                 $.log(`请求路径：${path}\n请求结果：${data}`);
                 let result = $.toObj(data);
-                if (result.respCode == 0) {
+                if (result.head.respCode == 0) {
                     const signResultDesc = result.body.signResult.map((e) => { return `${e.typeInfo}${e.amount}`}).join('\n');
                     const resultInfo = result.body.resultInfo || '签到成功';
                     const resultTxt = result.body.resultTxt || '签到7天可开启神秘宝箱哦~';
@@ -104,7 +104,7 @@ function querySignInDetail() {
             try {
                 $.log(`请求路径：${path}\n请求结果：${data}`);
                 let result = $.toObj(data);
-                if (result.respCode == 0) {
+                if (result.head.respCode == 0) {
                     $.signInDetailData = result;
                 }
                 else {
