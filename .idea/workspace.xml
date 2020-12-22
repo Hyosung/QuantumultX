@@ -27,7 +27,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd77c86e-1424-413b-b813-e7832aa9d961" name="默认的" comment="修改四川电信脚本">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tasks/scdx/scdx.js" beforeDir="false" afterPath="$PROJECT_DIR$/Tasks/scdx/scdx.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,6 +35,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1lxX2GbnaeSlS7erZopnVkgaBgc" />
@@ -60,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608539506477</updated>
-      <workItem from="1608539507873" duration="6164000" />
+      <workItem from="1608539507873" duration="6654000" />
     </task>
     <task id="LOCAL-00001" summary="修改四川电信脚本">
       <created>1608598631684</created>
@@ -69,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608598631684</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="修改四川电信脚本">
+      <created>1608599737687</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1608599737687</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,9 +115,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="修改四川电信脚本" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="320" y="182" key="Vcs.Push.Dialog.v2" timestamp="1608598704042">
+    <state x="320" y="182" key="Vcs.Push.Dialog.v2" timestamp="1608599746612">
       <screen x="0" y="23" width="1440" height="838" />
     </state>
-    <state x="320" y="182" key="Vcs.Push.Dialog.v2/0.23.1440.838/1440.-65.1920.1057@0.23.1440.838" timestamp="1608598704042" />
+    <state x="320" y="182" key="Vcs.Push.Dialog.v2/0.23.1440.838/1440.-65.1920.1057@0.23.1440.838" timestamp="1608599746612" />
   </component>
 </project>

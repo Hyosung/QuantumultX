@@ -65,6 +65,7 @@ function toNewSignIn() {
         }
         $.post(request, (err, resp, data) => {
             try {
+                $.log(`请求路径：${path}\n请求结果：${data}`);
                 let result = $.toObj(data);
                 if (result.respCode == 0) {
                     const signResultDesc = result.body.signResult.map((e) => { return `${e.typeInfo}${e.amount}`}).join('\n');
@@ -101,6 +102,7 @@ function querySignInDetail() {
         }
         $.post(request, (err, resp, data) => {
             try {
+                $.log(`请求路径：${path}\n请求结果：${data}`);
                 let result = $.toObj(data);
                 if (result.respCode == 0) {
                     $.signInDetailData = result;
