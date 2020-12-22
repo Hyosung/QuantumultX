@@ -47,15 +47,16 @@ function toNewSignIn() {
             return;
         }
         const { cookie, headers } = $.getjson($.SESSION_KEY);
+        const body = $.toStr({
+            head: {
+                cloudSessionID: cookie
+            },
+            body: ''
+        });
         const request = {
             url: `${$.API_BASE_URL}${path}`,
             headers: headers,
-            body: {
-                head: {
-                    cloudSessionID: cookie
-                },
-                body: ''
-            }
+            body: body
         }
         $.post(request, (err, resp, data) => {
             try {
@@ -82,15 +83,16 @@ function querySignInDetail() {
     const path = arguments.callee.name.toString();
     return new Promise((resolve) => {
         const { cookie, headers } = $.getjson($.SESSION_KEY);
+        const body = $.toStr({
+            head: {
+                cloudSessionID: cookie
+            },
+            body: ''
+        });
         const request = {
             url: `${$.API_BASE_URL}${path}`,
             headers: headers,
-            body: {
-                head: {
-                    cloudSessionID: cookie
-                },
-                body: ''
-            }
+            body: body
         }
         $.post(request, (err, resp, data) => {
             try {
