@@ -27,13 +27,18 @@ $.API_BASE_URL = 'https://wapsc.189.cn/lls-gold-center/signIn/'
 
 function checkData() {
     return new Promise((resolve) => {
-        if ($.signInDetailData.body.receivtFlag === '1') { // 已签到
-            const checkedInList = $.signInDetailData.body.signInDetail.filter((e) => { e.signFlag == '1'})
-            $.msg($.name, `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`);
-            $.isCheckedIn = true;
+        if ($.signInDetailData) {
+            if ($.signInDetailData.body.receivtFlag === '1') { // 已签到
+                const checkedInList = $.signInDetailData.body.signInDetail.filter((e) => { e.signFlag == '1'})
+                $.msg($.name, `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`);
+                $.isCheckedIn = true;
+            }
+            else {
+                $.isCheckedIn = false;
+            }
         }
         else {
-            $.isCheckedIn = false;
+            $.isCookieInvalid = true;
         }
         resolve();
     });
@@ -42,7 +47,7 @@ function checkData() {
 function toNewSignIn() {
     const path = arguments.callee.name.toString();
     return new Promise((resolve) => {
-        if ($.isCheckedIn) {
+        if ($.isCheckedIn || $.isCookieInvalid) {
             resolve()
             return;
         }
@@ -96,7 +101,13 @@ function querySignInDetail() {
         }
         $.post(request, (err, resp, data) => {
             try {
-                $.signInDetailData = $.toObj(data);
+                let result = $.toObj(data);
+                if (result.respCode == 0) {
+                    $.signInDetailData = result;
+                }
+                else {
+                    $.msg($.name, '签到失败', `错误原因：${result.respMsg}`);
+                }
             } catch (e) {
                 $.msg($.name, '获取签到状态失败', `错误原因：${resp}`);
             } finally {
