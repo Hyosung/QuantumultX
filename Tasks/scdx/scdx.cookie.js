@@ -7,7 +7,7 @@
  * hostname = wapsc.189.cn
  *
  * # QuanX
- * ^https?:\/\/wapsc\.189\.cn\/lls-gold-center\/signIn\/querySignDetail url script-request-body https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/scdx.cookie.js
+ * ^https?:\/\/wapsc\.189\.cn\/lls-gold-center\/signIn\/querySignInDetail url script-request-body https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/scdx.cookie.js
  * 0 9 * * * https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/scdx.js, tag=四川电信签到, img-url=https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/icon.png
  *
  */
