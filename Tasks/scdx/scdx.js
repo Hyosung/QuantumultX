@@ -44,8 +44,14 @@ function checkData() {
     return new Promise((resolve, reject) => {
         if ($.signInDetailData) {
             if ($.signInDetailData.receivtFlag === '1') { // 已签到
-                const checkedInList = $.signInDetailData.signInDetail.filter((e) => { e.signFlag == '1'})
-                let msg = `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`;
+                const checkedInList = $.signInDetailData.signInDetail.filter((e) => { return e.signFlag === '1'});
+                let msg;
+                if (checkedInList.length) {
+                    msg = `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`;
+                }
+                else {
+                    msg = '您已签到过';
+                }
                 $.msg($.name, msg);
                 reject(msg);
             }
