@@ -1,7 +1,21 @@
-
+/**
+ * 四川电信签到
+ *
+ * > 进入【四川电信】APP 即可
+ * > task 设置每天执行一次即可
+ *
+ * hostname = wapsc.189.cn
+ *
+ * # QuanX
+ * ^https?:\/\/wapsc\.189\.cn\/lls-user-center\/user\/doUserLogin url script-request-body https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/scdx.cookie.js
+ * 0 9 * * * https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/scdx.js, tag=四川电信签到, img-url=https://raw.githubusercontent.com/Hyosung/QuantumultX/main/Tasks/scdx/icon.png
+ *
+ */
 const $ = Env('四川电信签到');
 $.SESSION_KEY = 'scdx.cloud.session.key';
-$.API_BASE_URL = 'https://wapsc.189.cn/lls-gold-center/signIn/'
+$.API_BASE_URL = 'https://wapsc.189.cn/'
+$.SIGN_IN_BASE_PATH = 'lls-gold-center/signIn/';
+$.USER_BASE_PATH = 'lls-user-center/user/';
 
 !(async () => {
     if (!$.getdata($.SESSION_KEY)) { // 获取cookie
@@ -14,6 +28,7 @@ $.API_BASE_URL = 'https://wapsc.189.cn/lls-gold-center/signIn/'
         $.done();
         return;
     }
+    await doUserLogin();
     await querySignInDetail();
     await checkData();
     await toNewSignIn();
@@ -26,40 +41,68 @@ $.API_BASE_URL = 'https://wapsc.189.cn/lls-gold-center/signIn/'
     })
 
 function checkData() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         if ($.signInDetailData) {
-            if ($.signInDetailData.body.receivtFlag === '1') { // 已签到
-                const checkedInList = $.signInDetailData.body.signInDetail.filter((e) => { e.signFlag == '1'})
-                $.msg($.name, `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`);
-                $.isCheckedIn = true;
+            if ($.signInDetailData.receivtFlag === '1') { // 已签到
+                const checkedInList = $.signInDetailData.signInDetail.filter((e) => { e.signFlag == '1'})
+                let msg = `您已签到，当前是${checkedInList[checkedInList.length - 1].dayNum}`;
+                $.msg($.name, msg);
+                reject(msg);
             }
             else {
-                $.isCheckedIn = false;
+                // 可签到，继续往下执行
+                resolve();
             }
         }
         else {
-            $.isCookieInvalid = true;
+            reject('登录可能已失效，请重新获取！！！');
         }
-        resolve();
+    });
+}
+
+function doUserLogin() {
+    const path = arguments.callee.name.toString();
+    return new Promise((resolve, reject) => {
+        const { body, headers } = $.getjson($.SESSION_KEY);
+        const request = {
+            url: `${$.API_BASE_URL}${$.USER_BASE_PATH}${path}`,
+            headers: headers,
+            body: body
+        }
+        $.post(request, (err, resp, data) => {
+            try {
+                $.log(`请求路径：${path}\n请求结果：${data}`);
+                let result = $.toObj(data);
+                if (result.head.respCode === 0) {
+                    // 设置sessionId
+                    $.cloudSessionID = result.body.cloudSessionID;
+                    resolve();
+                }
+                else {
+                    let errMsg = result.respMsg || err;
+                    reject(errMsg);
+                    $.msg($.name, '登录失败', `错误原因：${errMsg}`);
+                }
+            } catch (e) {
+                reject(e);
+                $.msg($.name, '登录失败', `错误原因：${e}`);
+            }
+        });
     });
 }
 
 function toNewSignIn() {
     const path = arguments.callee.name.toString();
-    return new Promise((resolve) => {
-        if ($.isCheckedIn || $.isCookieInvalid) {
-            resolve()
-            return;
-        }
-        const { cookie, headers } = $.getjson($.SESSION_KEY);
+    return new Promise((resolve, reject) => {
+        const { headers } = $.getjson($.SESSION_KEY);
         const body = $.toStr({
             head: {
-                cloudSessionID: cookie
+                cloudSessionID: $.cloudSessionID
             },
             body: ''
         });
         const request = {
-            url: `${$.API_BASE_URL}${path}`,
+            url: `${$.API_BASE_URL}${$.SIGN_IN_BASE_PATH}${path}`,
             headers: headers,
             body: body
         }
@@ -74,12 +117,13 @@ function toNewSignIn() {
                     $.msg($.name, resultInfo, `${resultTxt}\n${signResultDesc}`);
                 }
                 else {
-                    $.msg($.name, '签到失败', `错误原因：${result.respMsg}`);
+                    let errMsg = result.respMsg || err;
+                    reject(errMsg);
+                    $.msg($.name, '签到失败', `错误原因：${errMsg}`);
                 }
             } catch (e) {
-                $.msg($.name, '签到失败', `错误原因：${resp}`);
-            } finally {
-                resolve();
+                reject(e);
+                $.msg($.name, '签到失败', `错误原因：${e}`);
             }
         });
     });
@@ -87,16 +131,16 @@ function toNewSignIn() {
 
 function querySignInDetail() {
     const path = arguments.callee.name.toString();
-    return new Promise((resolve) => {
-        const { cookie, headers } = $.getjson($.SESSION_KEY);
+    return new Promise((resolve, reject) => {
+        const { headers } = $.getjson($.SESSION_KEY);
         const body = $.toStr({
             head: {
-                cloudSessionID: cookie
+                cloudSessionID: $.cloudSessionID
             },
             body: ''
         });
         const request = {
-            url: `${$.API_BASE_URL}${path}`,
+            url: `${$.API_BASE_URL}${$.SIGN_IN_BASE_PATH}${path}`,
             headers: headers,
             body: body
         }
@@ -104,16 +148,18 @@ function querySignInDetail() {
             try {
                 $.log(`请求路径：${path}\n请求结果：${data}`);
                 let result = $.toObj(data);
-                if (result.head.respCode == 0) {
-                    $.signInDetailData = result;
+                if (result.head.respCode === 0 && result.body) {
+                    $.signInDetailData = result.body;
+                    resolve();
                 }
                 else {
-                    $.msg($.name, '签到失败', `错误原因：${result.respMsg}`);
+                    let errMsg = result.respMsg || err;
+                    reject(errMsg);
+                    $.msg($.name, '获取签到状态失败', `错误原因：${errMsg}`);
                 }
             } catch (e) {
-                $.msg($.name, '获取签到状态失败', `错误原因：${resp}`);
-            } finally {
-                resolve();
+                reject(e);
+                $.msg($.name, '获取签到状态失败', `错误原因：${e}`);
             }
         });
     });
