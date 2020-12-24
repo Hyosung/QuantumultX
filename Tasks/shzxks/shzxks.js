@@ -37,8 +37,8 @@ function requestData() {
             try {
                 $.log(`请求结果：${data}`);
                 let result = $.toObj(data);
-                if (result.code === 0 && result.body) {
-                    const ywblList = result.body.ywblList;
+                if (result.code === 0 && result.data) {
+                    const ywblList = result.data.ywblList;
                     if (ywblList.length > 0) {
                         const content = ywblList
                             .map((e) => { return `${e.statusmc} ${e.kfkssj}-${e.kfjssj}` })
