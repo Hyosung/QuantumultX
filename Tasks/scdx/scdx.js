@@ -86,12 +86,12 @@ function doUserLogin() {
                 }
                 else {
                     let errMsg = result.respMsg || err;
-                    reject(errMsg);
                     $.msg($.name, '登录失败', `错误原因：${errMsg}`);
+                    reject(errMsg);
                 }
             } catch (e) {
-                reject(e);
                 $.msg($.name, '登录失败', `错误原因：${e}`);
+                reject(e);
             }
         });
     });
@@ -121,15 +121,16 @@ function toNewSignIn() {
                     const resultInfo = result.body.resultInfo || '签到成功';
                     const resultTxt = result.body.resultTxt || '签到7天可开启神秘宝箱哦~';
                     $.msg($.name, resultInfo, `${resultTxt}\n${signResultDesc}`);
+                    resolve();
                 }
                 else {
                     let errMsg = result.respMsg || err;
-                    reject(errMsg);
                     $.msg($.name, '签到失败', `错误原因：${errMsg}`);
+                    reject(errMsg);
                 }
             } catch (e) {
-                reject(e);
                 $.msg($.name, '签到失败', `错误原因：${e}`);
+                reject(e);
             }
         });
     });
@@ -160,12 +161,12 @@ function querySignInDetail() {
                 }
                 else {
                     let errMsg = result.respMsg || err;
-                    reject(errMsg);
                     $.msg($.name, '获取签到状态失败', `错误原因：${errMsg}`);
+                    reject(errMsg);
                 }
             } catch (e) {
-                reject(e);
                 $.msg($.name, '获取签到状态失败', `错误原因：${e}`);
+                reject(e);
             }
         });
     });
