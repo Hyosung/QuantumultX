@@ -4,8 +4,12 @@ DOMAIN-SUFFIX,snssdk.com,REJECT
 DOMAIN-SUFFIX,app-measurement.com,REJECT
 DOMAIN-SUFFIX,pstatp.com,REJECT
 DOMAIN-SUFFIX,ctobsnssdk.com,REJECT
+<<<<<<< HEAD
 DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT
 DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com,REJECT
+=======
+DOMAIN-SUFFIX,pangolin-sdk-toutiao(-[a-z])?.com,REJECT
+>>>>>>> 974ce211bd21f93e7b366547d7ed53e7e3f2ad5a
 
 # DOMAIN-KEYWORD,apple.com.akadns.net,REJECT
 # USER-AGENT,MicroMessenger%20Client,REJECT
